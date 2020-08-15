@@ -1,0 +1,31 @@
+
+CC = g++
+
+BIN = ./bin
+SRC = ./src
+
+OUTPUT = pcc
+
+CC_OPTIONS = -std=c++11 -g -Wall -Werror
+
+OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))
+
+$(BIN)/%.o: $(SRC)/%.cpp
+	$(CC) $(CC_OPTIONS) $(INC_PATH) -c $^ -o $@
+
+$(BIN)/$(OUTPUT): $(OBJECTS)
+	$(CC) $^ $(LIBS) $(FRAMEWORKS) -o $@
+
+.PHONY: clean
+clean:
+	rm -f $(BIN)/*.o
+	rm -f $(BIN)/$(OUTPUT)
+
+.PHONY: run
+run:
+	$(BIN)/$(OUTPUT)
+
+.PHONY: debug
+debug:
+	lldb $(BIN)/$(OUTPUT)
+

@@ -65,8 +65,6 @@ bool Config::ReadConfig(const char* path)
             status = Error(path, line, "unknown line:");
             printf("%s\n", buffer);
         }
-
-        printf("%u: %s\n", line, status ? "good" : "bad");
     }
 
     return status;

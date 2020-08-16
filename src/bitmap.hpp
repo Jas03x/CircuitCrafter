@@ -18,6 +18,8 @@ public:
 
     uint32_t GetWidth();
     uint32_t GetHeight();
+
+    uint32_t GetPixel(unsigned int x, unsigned int y);
     uint8_t* GetPixels();
 };
 

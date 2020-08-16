@@ -152,22 +152,19 @@ bool Bitmap::Load(const char* path)
         m_Height = desc.v4.height;
 
         uint32_t num_pixels = m_Width * m_Height;
-        m_Pixels = new uint8_t[num_pixels];
+        m_Pixels = new uint8_t[num_pixels * 3];
 
         uint8_t buffer[3];
         for(unsigned int i = 0; status && (i < num_pixels); i++)
         {
-            printf("file position: %llu\n", static_cast<unsigned long long>(file.tellg()));
             if(!file.read(reinterpret_cast<char*>(buffer), 3).good())
             {
-                printf("Pixel %u of %u\n", i, num_pixels);
-                printf("eof ? %s\n", file.eof() ? "yes" : "no");
                 status = error(path, "IO failure");
             }
 
-            m_Pixels[i * 3 + 0] = buffer[2];
+            m_Pixels[i * 3 + 0] = buffer[0];
             m_Pixels[i * 3 + 1] = buffer[1];
-            m_Pixels[i * 3 + 2] = buffer[0];
+            m_Pixels[i * 3 + 2] = buffer[2];
         }
     }
 
@@ -187,4 +184,17 @@ uint32_t Bitmap::GetHeight()
 uint8_t* Bitmap::GetPixels()
 {
     return m_Pixels;
+}
+
+uint32_t Bitmap::GetPixel(unsigned int x, unsigned int y)
+{
+    unsigned int rgb = 0;
+    uint8_t* pixel = &m_Pixels[(x + y * m_Width) * 3];
+
+    uint8_t* p = reinterpret_cast<uint8_t*>(&rgb);
+    p[0] = pixel[0];
+    p[1] = pixel[1];
+    p[2] = pixel[2];
+
+    return rgb;
 }

@@ -1,6 +1,7 @@
 
 #include <cstdio>
 
+#include "analyzer.hpp"
 #include "config.hpp"
 
 int main(int argc, char* argv[])
@@ -32,6 +33,12 @@ int main(int argc, char* argv[])
 			Config::PIN& p = config.Outputs[i];
 			printf("Output %s: (%u, %u)\n", p.name, p.x, p.y);
 		}
+	}
+
+	Analyzer analyzer(config);
+	if(status)
+	{
+		analyzer.Load(argv[2]);
 	}
 
 	return status ? 0 : -1;

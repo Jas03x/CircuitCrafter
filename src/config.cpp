@@ -3,17 +3,7 @@
 #include <cstdio>
 #include <regex>
 
-bool Config::Error(const char* file_name, const char* message)
-{
-    printf("%s: %s\n", file_name, message);
-    return false;
-}
-
-bool Config::Error(const char* file_name, unsigned int line_number, const char* message)
-{
-    printf("%s:%u: %s\n", file_name, line_number, message);
-    return false;
-}
+#include "error.hpp"
 
 bool Config::ReadConfig(const char* path)
 {
@@ -35,12 +25,16 @@ bool Config::ReadConfig(const char* path)
 
     while(status)
     {
-        if(config.eof()) {
-            break;
-        } else {
-            line ++;
-            *buffer = 0;
-            config.getline(buffer, MAX_LINE_LENGTH);
+        line ++;
+        *buffer = 0;
+
+        if(!config.getline(buffer, MAX_LINE_LENGTH).good())
+        {
+            if(config.eof()) {
+                break;
+            } else {
+                status = error(path, "IO failure");
+            }
         }
 
         if(std::regex_match(buffer, cm, pin))
@@ -57,12 +51,12 @@ bool Config::ReadConfig(const char* path)
             } else if(cm[1].str() == "OUT") {
                 Outputs.push_back(p);
             } else {
-                status = Error(path, line, "unknown pin");
+                status = error(path, line, "unknown pin");
             }
         }
         else if((*buffer != 0) && !std::regex_match(buffer, empty))
         {
-            status = Error(path, line, "unknown line:");
+            status = error(path, line, "unknown line:");
             printf("%s\n", buffer);
         }
     }

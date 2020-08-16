@@ -17,10 +17,6 @@ public:
 		char name[32];
 	};
 
-private:
-	bool Error(const char* file_name, const char* message);
-	bool Error(const char* file_name, unsigned int line_number, const char* message);
-
 public:
 	std::vector<PIN> Inputs;
 	std::vector<PIN> Outputs;

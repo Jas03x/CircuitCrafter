@@ -189,7 +189,7 @@ uint8_t* Bitmap::GetPixels()
 uint32_t Bitmap::GetPixel(unsigned int x, unsigned int y)
 {
     unsigned int rgb = 0;
-    uint8_t* pixel = &m_Pixels[(x + y * m_Width) * 3];
+    uint8_t* pixel = &m_Pixels[(x + (m_Height - y - 1) * m_Width) * 3];
 
     uint8_t* p = reinterpret_cast<uint8_t*>(&rgb);
     p[0] = pixel[0];

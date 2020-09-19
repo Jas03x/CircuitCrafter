@@ -34,6 +34,7 @@ bool Analyzer::ProcessInput(unsigned int x, unsigned int y)
         status = false;
         printf("error: input (%u, %u) is not a pin\n", x, y);
     }
+    
 
     return status;
 }

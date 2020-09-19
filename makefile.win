@@ -23,7 +23,7 @@ PDB = pcc.pdb
 EXE = pcc.exe
 
 CC_OPTIONS   = -Zi -D_HAS_EXCEPTIONS=0 -Fd:$(BIN)/$(PDB)
-DBG_OPTIONS  = -y "C:/Users/Jas/Documents/Projects/CircuitCrafter/bin/" -srcpath "C:/Users/Jas/Documents/Projects/CircuitCrafter/src"
+DBG_OPTIONS  = -y "C:/Users/Jas/Documents/Projects/PCC/bin/" -srcpath "C:/Users/Jas/Documents/Projects/PCC/src"
 LINK_OPTIONS = -DEBUG -PDB:$(BIN)/$(PDB)
 
 OBJECTS = $(patsubst $(SRC)/%.cpp, $(BIN)/%.o, $(wildcard $(SRC)/*.cpp))
@@ -37,7 +37,7 @@ $(EXE): $(OBJECTS)
 	$(LINK) $(LINK_OPTIONS) $(LIB_PATH) $^ $(LIBS) /OUT:$(BIN)/$@
 
 debug:
-	$(DBG) $(DBG_OPTIONS) $(BIN)/$(EXE)
+	$(DBG) $(DBG_OPTIONS) $(BIN)/$(EXE) ./test/circuit.cfg ./test/circuit.bmp
 
 .PHONY: run
 run:

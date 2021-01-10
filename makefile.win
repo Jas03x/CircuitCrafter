@@ -1,4 +1,4 @@
-PATH = /mnt/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.27.29110/bin/Hostx64/x64
+PATH = /mnt/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/Hostx64/x64
 
 CC   = "$(PATH)/cl.exe"
 LINK = "$(PATH)/link.exe"
@@ -6,15 +6,15 @@ LINK = "$(PATH)/link.exe"
 DBG = "/mnt/c/Program Files (x86)/Windows Kits/10/Debuggers/x64/windbg.exe"
 
 INC_PATH  = -I "C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/ucrt"
-INC_PATH += -I "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.27.29110/include"
+INC_PATH += -I "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/include"
 INC_PATH += -I "C:/Dev/Libraries/SDL2/include"
 
-LIB_PATH  = -LIBPATH:"C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.27.29110/lib/x64"
+LIB_PATH  = -LIBPATH:"C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/lib/x64"
 LIB_PATH += -LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.18362.0/um/x64"
 LIB_PATH += -LIBPATH:"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.18362.0/ucrt/x64"
 LIB_PATH += -LIBPATH:"C:/Libraries/SDL2/lib/x64"
 
-LIBS = SDL2.lib SDL2main.lib opengl32.lib
+# LIBS = SDL2.lib SDL2main.lib opengl32.lib
 
 BIN = ./bin
 SRC = ./src

@@ -1,7 +1,5 @@
 #include "analyzer.hpp"
 
-#include "error.hpp"
-
 Analyzer::Analyzer(Config& cfg)
 {
     m_Config = &cfg;
@@ -13,7 +11,8 @@ bool Analyzer::Load(const char* path)
 
     if(!m_Bitmap.Load(path))
     {
-        status = error(path, "error reading bitmap file");
+        status = false;
+        printf("error reading bitmap file\n");
     }
 
     for(unsigned int i = 0; status && (i < m_Config->Inputs.size()); i++)

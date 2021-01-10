@@ -3,8 +3,6 @@
 #include <cstdio>
 #include <regex>
 
-#include "error.hpp"
-
 bool Config::ReadConfig(const char* path)
 {
     bool status = true;
@@ -33,7 +31,8 @@ bool Config::ReadConfig(const char* path)
             if(config.eof()) {
                 break;
             } else {
-                status = error(path, "IO failure");
+                status = false;
+                printf("IO failure\n");
             }
         }
 
@@ -46,18 +45,24 @@ bool Config::ReadConfig(const char* path)
             };
             strncat(p.name, cm[2].str().c_str(), 32);
 
-            if(cm[1].str() == "IN") {
+            if(cm[1].str() == "IN")
+            {
                 Inputs.push_back(p);
-            } else if(cm[1].str() == "OUT") {
+            }
+            else if(cm[1].str() == "OUT")
+            {
                 Outputs.push_back(p);
-            } else {
-                status = error(path, line, "unknown pin");
+            }
+            else
+            {
+                status = false;
+                printf("error: unknown pin\n");
             }
         }
         else if((*buffer != 0) && !std::regex_match(buffer, empty))
         {
-            status = error(path, line, "unknown line:");
-            printf("%s\n", buffer);
+            status = false;
+            printf("unknown line: %s\n", buffer);
         }
     }
 

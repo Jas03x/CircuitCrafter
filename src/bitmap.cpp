@@ -2,8 +2,6 @@
 
 #include <fstream>
 
-#include "error.hpp"
-
 // bmp file format: https://en.wikipedia.org/wiki/BMP_file_format
 
 enum : uint16_t { BMP_SIGNATURE = 0x4D42 };
@@ -100,7 +98,8 @@ bool Bitmap::Load(const char* path)
     std::ifstream file(path, std::ifstream::binary);
     if(!file.good())
     {
-        status = error(path, "could not open bitmap for reading");
+        status = false;
+        printf("error: could not open bitmap for reading\n");
     }
 
     BMP_HDR hdr = {};
@@ -111,7 +110,8 @@ bool Bitmap::Load(const char* path)
 
     if(status && (hdr.type != BMP_SIGNATURE))
     {
-        status = error(path, "invalid bitmap signature");
+        status = false;
+        printf("error: invalid bitmap signature\n");
     }
 
     uint32_t hdr_ver = 0;
@@ -133,16 +133,22 @@ bool Bitmap::Load(const char* path)
         }
         else
         {
-            status = error(path, "unsupported bitmap file");
+            status = false;
+            printf("error:unsupported bitmap file\n");
         }
     }
 
     if(status)
     {
-        if((desc.v4.compression != BMP_RGB) && (desc.v4.compression != BMP_BITFIELD)) {
-            status = error(path, "invalid compression");
-        } else if(desc.v4.bpp != 24) {
-            status = error(path, "bitmap has alpha channel");
+        if((desc.v4.compression != BMP_RGB) && (desc.v4.compression != BMP_BITFIELD))
+        {
+            status = false;
+            printf("error: invalid compression\n");
+        }
+        else if(desc.v4.bpp != 24)
+        {
+            status = false;
+            printf("error: bitmap has alpha channel\n");
         }
     }
 
@@ -159,7 +165,8 @@ bool Bitmap::Load(const char* path)
         {
             if(!file.read(reinterpret_cast<char*>(buffer), 3).good())
             {
-                status = error(path, "IO failure");
+                status = false;
+                printf("error: IO failure\n");
             }
 
             m_Pixels[i * 3 + 0] = buffer[0];
